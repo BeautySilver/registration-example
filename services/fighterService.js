@@ -9,7 +9,7 @@ class FighterService {
         return FighterRepository.create({"name":params.name,"health":"100","power":params.power, "defense":params.defense})
     }
     update(params){
-        return UserRepository.update(params.id, {"firstName":params.firstName,"lastName":params.lastName,"email":params.email,"phoneNumber":params.phoneNumber, "password":params.password})
+        return UserRepository.update(params.id, {"name":params.name,"health":"100","power":params.power, "defense":params.defense})
     }
     delete(params){
         return UserRepository.delete(params.id)

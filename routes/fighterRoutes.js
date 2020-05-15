@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
     responseMiddleware(FighterService.getFighters(),res,next)
 });
 router.get('/:id', function (req,res){
-    responseMiddleware(FighterService.search((v)=>v.id==req.params.id),res,next)
+    responseMiddleware(FighterService.search(req.body),res,next)
     // res.send(UserService.search((v)=>v.id==req.params.id));
 });
 router.post('/', createFighterValid,function(req, res, next) {
@@ -19,12 +19,12 @@ router.post('/', createFighterValid,function(req, res, next) {
 
 });
 router.put('/:id', updateFighterValid, function (req,res,next){
-    responseMiddleware(UserService.update(req.params),res,next)
+    responseMiddleware(UserService.update(req.body),res,next)
     //res.send(UserService.save(req.params));
 
 });
 router.delete('/:id', function (req,res){
-    responseMiddleware(UserService.delete(),res,next)
+    responseMiddleware(UserService.delete(req.body),res,next)
     //res.send(UserService.delete(req.params))
 });
 // TODO: Implement route controllers for fighter
