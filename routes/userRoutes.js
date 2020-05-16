@@ -10,8 +10,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function (req,res,next){
-    //responseMiddleware(UserService.search(req.params.id),res,next)
-    res.send(UserService.search((v)=>v.id==req.params.id));
+    responseMiddleware(UserService.search(req.params.id),res,next)
+    //res.send(UserService.search((v)=>v.id==req.params.id));
     //res.send(req.params.id)
 });
 router.post('/', createUserValid,function(req, res, next) {

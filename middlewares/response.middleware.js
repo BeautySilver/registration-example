@@ -7,7 +7,7 @@ const responseMiddleware = (req, res, next) => {
         res.status(200).send(req)
     }
     // TODO: Implement middleware that returns result of the query
-    //next
+    next
 }
 
 exports.responseMiddleware = responseMiddleware;

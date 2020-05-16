@@ -7,6 +7,9 @@ const createUserValid = (req, res, next) => {
         req &&
         req.params
     ) {
+        if(req.body!=user){
+            res.status(400).send({"error":"true", "message":"Something else in request"})
+        }
         if (!email_re.test(req.body.email)){
             res.status(400).send({"error":"true", "message":"Invalid email: "});
             return false
@@ -27,6 +30,9 @@ const createUserValid = (req, res, next) => {
             res.status(400).send({"error":"true", "message":"Less than 3 symbols"});
             return false
         }
+        if(req.body.id){
+            res.status(400).send({"error":"true", "message":"Id in body"})
+        }
         //TODO: check on email exist
         next();
     }
@@ -43,26 +49,33 @@ const updateUserValid = (req, res, next) => {
         req.params.id
 
     ) {
+        if(req.body!=user){
+            res.status(400).send({"error":"true", "message":"Something else in request"})
+        }
         if (!email_re.test(req.body.email)){
-            res.send({"error":"true", "message":"Invalid email"});
+            res.status(400).send({"error":"true", "message":"Invalid email: "});
             return false
         }
         if (!phone_re.test(req.body.phoneNumber)){
-            res.send({"error":"true", "message":"Invalid phone number"});
+            res.status(400).send({"error":"true", "message":"Invalid phone number"});
             return false
         }
         if(!req.body.firstName){
-            res.send({"error":"true", "message":"No firstname"});
+            res.status(400).send({"error":"true", "message":"No firstname"});
             return false
         }
         if(!req.body.lastName){
-            res.send({"error":"true", "message":"No secondname"});
+            res.status(400).send({"error":"true", "message":"No secondname"});
             return false
         }
         if(!req.body.password || req.body.password.length<3){
-            res.send({"error":"true", "message":"Less than 3 symbols"});
+            res.status(400).send({"error":"true", "message":"Less than 3 symbols"});
             return false
         }
+        if(req.body.id){
+            res.status(400).send({"error":"true", "message":"Id in body"})
+        }
+
         next();
     } else {
         res.status(404).send({"error":"true", "message":"No user id"})

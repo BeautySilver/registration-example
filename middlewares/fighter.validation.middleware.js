@@ -8,6 +8,9 @@ const createFighterValid = (req, res, next) => {
         req &&
         req.params
     ) {
+        if(req.body!=fighter){
+            res.status(400).send({"error":"true", "message":"Something else in request"})
+        }
         if (!power_re.test(req.body.power)){
             res.status(400).send({"error":"true", "message":"Invalid power"});
             return false
@@ -19,6 +22,9 @@ const createFighterValid = (req, res, next) => {
         if(!req.body.name){
             res.status(400).send({"error":"true", "message":"No Name"});
             return false
+        }
+        if(req.body.id){
+            res.status(400).send({"error":"true", "message":"Id in body"})
         }
 
         //TODO: check on email exist
@@ -37,6 +43,9 @@ const updateFighterValid = (req, res, next) => {
         req.params.id
 
     ) {
+        if(req.body!=fighter){
+            res.status(400).send({"error":"true", "message":"Something else in request"})
+        }
         if (!power_re.test(req.body.power)){
             res.status(400).send({"error":"true", "message":"Invalid power"});
             return false
@@ -49,10 +58,12 @@ const updateFighterValid = (req, res, next) => {
             res.status(400).send({"error":"true", "message":"No Name"});
             return false
         }
-
+        if(req.body.id){
+            res.status(400).send({"error":"true", "message":"Id in body"})
+        }
         next();
     } else {
-        res.status(404).send({"error":"true", "message":"No user id"})
+        res.status(404).send({"error":"true", "message":"No fighter id"})
     }
 }
 

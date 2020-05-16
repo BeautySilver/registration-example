@@ -9,13 +9,13 @@ class FighterService {
         return FighterRepository.create({"name":params.name,"health":"100","power":params.power, "defense":params.defense})
     }
     update(params){
-        return UserRepository.update(params.id, {"name":params.name,"health":"100","power":params.power, "defense":params.defense})
+        return FighterRepository.update(params.id, {"name":params.name,"health":"100","power":params.power, "defense":params.defense})
     }
     delete(params){
-        return UserRepository.delete(params.id)
+        return FighterRepository.delete(params.id)
     }
     search(search) {
-        const item = UserRepository.getOne(search);
+        const item = FighterRepository.getOne(search);
         if(!item) {
             return null;
         }
