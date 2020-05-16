@@ -52,7 +52,8 @@ const updateUserValid = (req, res, next) => {
 
     if (
         req &&
-        req.body
+        req.body &&
+        req.params.id
 
     ) {
         let a1 = Object.keys(user);

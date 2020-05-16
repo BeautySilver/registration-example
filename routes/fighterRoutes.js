@@ -43,7 +43,9 @@ router.delete('/:id', function (req,res,next){
     if (!fighterById){
         responseMiddleware({error:true, message:"No such id"},res,next)
     }
-
+    else {
+        next()
+    }
     //res.send(UserService.delete(req.params))
 },function (req,res) {
     responseMiddleware(FighterService.delete({id:req.params.id}),res)

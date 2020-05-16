@@ -46,7 +46,8 @@ const updateFighterValid = (req, res, next) => {
 
     if (
         req &&
-        req.body
+        req.body&&
+        req.params.id
 
     ) {
         let a1 = Object.keys(fighter);
@@ -55,7 +56,7 @@ const updateFighterValid = (req, res, next) => {
         const result = a2.filter(e => a1.indexOf(e) === -1 || e==="id").length == 0;
 
         if(result==false){
-            res.status(400).send({"error":"true","message":"Something else in req"})
+            res.status(400).send({"error":"true","message":"Something else in req"});
             return false
         }
         if (!power_re.test(req.body.power)){
