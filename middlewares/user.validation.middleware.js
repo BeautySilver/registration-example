@@ -5,13 +5,19 @@ const createUserValid = (req, res, next) => {
     const phone_re=/^[+]380[0-9]{9}$/;
     if (
         req &&
-        req.params
+        req.body
     ) {
-        if(req.body!=user){
-            res.status(400).send({"error":"true", "message":"Something else in request"})
+        let a1 = Object.keys(user);
+        let a2=Object.keys(req.body);
+        const result = a2.filter(e => a1.indexOf(e) === -1 || e==="id").length == 0;
+        if(result==false){
+
+            res.status(400).send({"error":"true","message":"Something else in req"})
+            return false
         }
         if (!email_re.test(req.body.email)){
             res.status(400).send({"error":"true", "message":"Invalid email: "});
+
             return false
         }
         if (!phone_re.test(req.body.phoneNumber)){
@@ -43,14 +49,20 @@ const createUserValid = (req, res, next) => {
 const updateUserValid = (req, res, next) => {
     const email_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@gmail.com$/;
     const phone_re=/^[+]380[0-9]{9}$/;
+
     if (
         req &&
-        req.params &&
+        req.body &&
         req.params.id
 
     ) {
-        if(req.body!=user){
-            res.status(400).send({"error":"true", "message":"Something else in request"})
+        let a1 = Object.keys(user);
+        let a2=Object.keys(req.body);
+
+        const result = a2.filter(e => a1.indexOf(e) === -1 || e==="id").length == 0;
+        if(result==false){
+            res.status(400).send({"error":"true","message":"Something else in req"})
+            return false
         }
         if (!email_re.test(req.body.email)){
             res.status(400).send({"error":"true", "message":"Invalid email: "});
@@ -74,6 +86,7 @@ const updateUserValid = (req, res, next) => {
         }
         if(req.body.id){
             res.status(400).send({"error":"true", "message":"Id in body"})
+            return false
         }
 
         next();

@@ -4,12 +4,18 @@ const createFighterValid = (req, res, next) => {
     // TODO: Implement validatior for fighter entity during creation
     const power_re=/^0*([1-9]|[1-8][0-9]|9[0-9]|99)$/;
     const defense_re=/^(?:[1-9]|0[1-9]|10)$/;
+
     if (
         req &&
-        req.params
+        req.body
     ) {
-        if(req.body!=fighter){
-            res.status(400).send({"error":"true", "message":"Something else in request"})
+        let a1 = Object.keys(fighter);
+        let a2=Object.keys(req.body);
+        const result = a2.filter(e => a1.indexOf(e) === -1 || e==="id").length == 0;
+
+        if(result==false){
+            res.status(400).send({"error":"true","message":"Something else in req"})
+            return false
         }
         if (!power_re.test(req.body.power)){
             res.status(400).send({"error":"true", "message":"Invalid power"});
@@ -37,14 +43,20 @@ const updateFighterValid = (req, res, next) => {
     // TODO: Implement validatior for fighter entity during update
     const power_re=/^0*([0-9]|[1-8][0-9]|9[0-9]|99)$/;
     const defense_re=/^(?:[1-9]|0[1-9]|10)$/;
+
     if (
         req &&
-        req.params &&
+        req.body &&
         req.params.id
 
     ) {
-        if(req.body!=fighter){
-            res.status(400).send({"error":"true", "message":"Something else in request"})
+        let a1 = Object.keys(fighter);
+        let a2=Object.keys(req.body);
+
+        const result = a2.filter(e => a1.indexOf(e) === -1 || e==="id").length == 0;
+        if(result==false){
+            res.status(400).send({"error":"true","message":"Something else in req"})
+            return false
         }
         if (!power_re.test(req.body.power)){
             res.status(400).send({"error":"true", "message":"Invalid power"});
