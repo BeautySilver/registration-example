@@ -9,7 +9,7 @@ router.get('/', function(req, res) {
     responseMiddleware(FighterService.getFighters(),res)
 });
 router.get('/:id', function (req,res){
-    responseMiddleware(FighterService.search(req.body),res)
+    responseMiddleware(FighterService.search({id:req.params.id}),res)
     // res.send(UserService.search((v)=>v.id==req.params.id));
 });
 router.post('/', createFighterValid,function(req, res, next) {
@@ -18,7 +18,10 @@ router.post('/', createFighterValid,function(req, res, next) {
     if(fighterByName){
         responseMiddleware({error:true, message:"Name isn't unique"},res,next)
     }
-     responseMiddleware(FighterService.create(req.body),res)
+    else{
+        next()
+    }
+
     // res.send(UserService.create(req.params));
 
 },function(req,res){responseMiddleware(FighterService.create(req.body),res)});
@@ -27,10 +30,13 @@ router.put('/:id', updateFighterValid, function (req,res,next){
     if(fighterByName && fighterByName.id != req.params.id){
         responseMiddleware({error:true, message:"Name isn't unique"},res,next)
     }
-    responseMiddleware(UserService.update(req.body),res)
-    //res.send(UserService.save(req.params));
+    else{
+        next()
+    }
+
 
 },function(req,res){responseMiddleware(FighterService.create(req.body),res)});
+
 router.delete('/:id', function (req,res){
     responseMiddleware(UserService.delete(req.body),res)
     //res.send(UserService.delete(req.params))

@@ -52,14 +52,16 @@ const updateUserValid = (req, res, next) => {
 
     if (
         req &&
-        req.body &&
-        req.params.id
+        req.body
 
     ) {
         let a1 = Object.keys(user);
         let a2=Object.keys(req.body);
 
         const result = a2.filter(e => a1.indexOf(e) === -1 || e==="id").length == 0;
+        if(!req.params.id){
+            res.status(400).send({"error":"true","message":"No user with such id"})
+        }
         if(result==false){
             res.status(400).send({"error":"true","message":"Something else in req"})
             return false
