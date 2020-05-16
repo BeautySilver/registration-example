@@ -48,7 +48,6 @@ const updateFighterValid = (req, res, next) => {
         req &&
         req.body
 
-
     ) {
         let a1 = Object.keys(fighter);
         let a2=Object.keys(req.body);

@@ -29,6 +29,7 @@ router.post('/', createUserValid,function(req, res, next) {
     }
 
 },function(req,res){responseMiddleware(UserService.create(req.body),res)});
+
 router.put('/:id',updateUserValid, function (req,res,next){
     const userByEmail = UserService.search({email:req.body.email});
     const userByPhoneNumber = UserService.search({phoneNumber:req.body.phoneNumber});
@@ -41,8 +42,9 @@ router.put('/:id',updateUserValid, function (req,res,next){
     else { next()}
     //res.send(UserService.save(req.params));
 },function(req,res){responseMiddleware(UserService.update(req.body),res)});
+
 router.delete('/:id', function (req,res,next){
-    responseMiddleware(UserService.delete(),res,next)
+    responseMiddleware(UserService.delete({id:req.params.id}),res,next)
     //res.send(UserService.delete(req.params))
 });
 

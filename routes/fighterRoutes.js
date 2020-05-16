@@ -25,6 +25,7 @@ router.post('/', createFighterValid,function(req, res, next) {
     // res.send(UserService.create(req.params));
 
 },function(req,res){responseMiddleware(FighterService.create(req.body),res)});
+
 router.put('/:id', updateFighterValid, function (req,res,next){
     const fighterByName = FighterService.search({name:req.body.name});
     if(fighterByName && fighterByName.id != req.params.id){
@@ -35,10 +36,10 @@ router.put('/:id', updateFighterValid, function (req,res,next){
     }
 
 
-},function(req,res){responseMiddleware(FighterService.create(req.body),res)});
+},function(req,res){responseMiddleware(FighterService.update(req.body),res)});
 
 router.delete('/:id', function (req,res){
-    responseMiddleware(UserService.delete(req.body),res)
+    responseMiddleware(UserService.delete({id:req.params.id}),res)
     //res.send(UserService.delete(req.params))
 });
 // TODO: Implement route controllers for fighter
