@@ -46,7 +46,7 @@ router.put('/:id',updateUserValid, function (req,res,next){
 router.delete('/:id', function (req,res,next){
     const userById=UserService.search({id:req.params.id});
 
-    if (!userById){
+    if (userById==null){
         responseMiddleware({error:true, message:"No such id"},res,next)
     }
     else{

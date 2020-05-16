@@ -11,12 +11,11 @@ const createFighterValid = (req, res, next) => {
     ) {
         let a1 = Object.keys(fighter);
         let a2=Object.keys(req.body);
-        const result = a2.filter(e => a1.indexOf(e) === -1 || e==="id").length == 0;
+        let newBody = {};
+        a1.filter(e => e != "id" && e!="health").forEach(e => newBody[e] = req.body[e]);
+        //result.forEach(e => req.body[e] = null);
+        req.body=newBody;
 
-        if(result==false){
-            res.status(400).send({"error":"true","message":"Something else in req"})
-            return false
-        }
         if (!power_re.test(req.body.power)){
             res.status(400).send({"error":"true", "message":"Invalid power"});
             return false
@@ -29,9 +28,7 @@ const createFighterValid = (req, res, next) => {
             res.status(400).send({"error":"true", "message":"No Name"});
             return false
         }
-        if(req.body.id){
-            res.status(400).send({"error":"true", "message":"Id in body"})
-        }
+
 
         //TODO: check on email exist
         next();
@@ -52,13 +49,17 @@ const updateFighterValid = (req, res, next) => {
     ) {
         let a1 = Object.keys(fighter);
         let a2=Object.keys(req.body);
+        const result = a2.filter(e => a1.indexOf(e) === -1 );
 
-        const result = a2.filter(e => a1.indexOf(e) === -1 || e==="id").length == 0;
-
-        if(result==false){
-            res.status(400).send({"error":"true","message":"Something else in req"});
-            return false
-        }
+        console.log(req.body);
+        //result.forEach(e => req.body[e] = null);
+        //result.forEach(e =>console.log(req.body, e));
+        console.log("test", result, req.body);
+        let newBody = {};
+        a1.filter(e => e != "id" && e!="health").forEach(e => newBody[e] = req.body[e]);
+        //result.forEach(e => req.body[e] = null);
+        req.body=newBody;
+        console.log(req.body);
         if (!power_re.test(req.body.power)){
             res.status(400).send({"error":"true", "message":"Invalid power"});
             return false
@@ -71,9 +72,7 @@ const updateFighterValid = (req, res, next) => {
             res.status(400).send({"error":"true", "message":"No Name"});
             return false
         }
-        if(req.body.id){
-            res.status(400).send({"error":"true", "message":"Id in body"})
-        }
+
         next();
     } else {
         res.status(404).send({"error":"true", "message":"No fighter id"})

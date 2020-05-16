@@ -9,12 +9,12 @@ const createUserValid = (req, res, next) => {
     ) {
         let a1 = Object.keys(user);
         let a2=Object.keys(req.body);
-        const result = a2.filter(e => a1.indexOf(e) === -1 || e==="id").length == 0;
-        if(result==false){
 
-            res.status(400).send({"error":"true","message":"Something else in req"})
-            return false
-        }
+
+        let newBody = {};
+        a1.filter(e => e != "id").forEach(e => newBody[e] = req.body[e]);
+        //result.forEach(e => req.body[e] = null);
+        req.body=newBody;
         if (!email_re.test(req.body.email)){
             res.status(400).send({"error":"true", "message":"Invalid email: "});
 
@@ -36,9 +36,7 @@ const createUserValid = (req, res, next) => {
             res.status(400).send({"error":"true", "message":"Less than 3 symbols"});
             return false
         }
-        if(req.body.id){
-            res.status(400).send({"error":"true", "message":"Id in body"})
-        }
+
         //TODO: check on email exist
         next();
     }
@@ -59,12 +57,10 @@ const updateUserValid = (req, res, next) => {
         let a1 = Object.keys(user);
         let a2=Object.keys(req.body);
 
-        const result = a2.filter(e => a1.indexOf(e) === -1 || e==="id").length == 0;
-
-        if(result==false){
-            res.status(400).send({"error":"true","message":"Something else in req"})
-            return false
-        }
+        let newBody = {};
+        a1.filter(e => e != "id").forEach(e => newBody[e] = req.body[e]);
+        //result.forEach(e => req.body[e] = null);
+        req.body=newBody;
         if (!email_re.test(req.body.email)){
             res.status(400).send({"error":"true", "message":"Invalid email: "});
             return false
@@ -83,10 +79,6 @@ const updateUserValid = (req, res, next) => {
         }
         if(!req.body.password || req.body.password.length<3){
             res.status(400).send({"error":"true", "message":"Less than 3 symbols"});
-            return false
-        }
-        if(req.body.id){
-            res.status(400).send({"error":"true", "message":"Id in body"})
             return false
         }
 

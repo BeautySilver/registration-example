@@ -40,7 +40,7 @@ router.put('/:id', updateFighterValid, function (req,res,next){
 
 router.delete('/:id', function (req,res,next){
     const fighterById=FighterService.search({id:req.params.id});
-    if (!fighterById){
+    if (fighterById==null){
         responseMiddleware({error:true, message:"No such id"},res,next)
     }
     else {
