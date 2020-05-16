@@ -3,6 +3,9 @@ const responseMiddleware = (req, res, next) => {
     if (req.error){
         res.status(400).send(req)
     }
+    if (req.message == "No such id"){
+        res.status(404).send(req)
+    }
     else if(next){
         next()
     }

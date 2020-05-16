@@ -38,9 +38,15 @@ router.put('/:id', updateFighterValid, function (req,res,next){
 
 },function(req,res){responseMiddleware(FighterService.update(req.body),res)});
 
-router.delete('/:id', function (req,res){
-    responseMiddleware(UserService.delete({id:req.params.id}),res)
+router.delete('/:id', function (req,res,next){
+    const fighterById=FighterService.search({id:req.params.id});
+    if (!fighterById){
+        responseMiddleware({error:true, message:"No such id"},res,next)
+    }
+
     //res.send(UserService.delete(req.params))
+},function (req,res) {
+    responseMiddleware(FighterService.delete({id:req.params.id}),res)
 });
 // TODO: Implement route controllers for fighter
 

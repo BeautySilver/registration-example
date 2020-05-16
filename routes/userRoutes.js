@@ -44,8 +44,14 @@ router.put('/:id',updateUserValid, function (req,res,next){
 },function(req,res){responseMiddleware(UserService.update(req.body),res)});
 
 router.delete('/:id', function (req,res,next){
-    responseMiddleware(UserService.delete({id:req.params.id}),res,next)
+    const userById=UserService.search({id:req.params.id});
+    if (!userById){
+        responseMiddleware({error:true, message:"No such id"},res,next)
+    }
+
     //res.send(UserService.delete(req.params))
+},function (req,res) {
+    responseMiddleware(UserService.delete({id:req.params.id}),res)
 });
 
 // TODO: Implement route controllers for user
