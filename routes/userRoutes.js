@@ -25,7 +25,7 @@ router.put('/:id',updateUserValid, function (req,res,next){
     //res.send(UserService.save(req.params));
 
 });
-router.delete('/:id', function (req,res){
+router.delete('/:id',updateUserValid, function (req,res){
     responseMiddleware(UserService.delete(),res,next)
     //res.send(UserService.delete(req.params))
 });
